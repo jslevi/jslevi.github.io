@@ -1,0 +1,1012 @@
+<!--
+GENERAL SITE THEME (SpaceHey-inspired)
+
+What this gives you:
+- A reusable set of CSS variables + components (nav, cards, tables, buttons, scrollbars)
+- Same “dreamy pink + glow + scanlines + floating” vibe
+- Works on any normal site structure (not tied to SpaceHey classes)
+
+How to use:
+1) Put this <style> in your global CSS (or a theme.css file).
+2) Wrap your site in <body class="theme-spacehey"> (or apply .theme-spacehey to a top-level div).
+3) Use the example HTML structure below (or just copy the classes you want).
+
+Notes:
+- Replace the background image URLs if you want to avoid hotlinking.
+- If you want a lighter or darker version, tweak the :root variables only.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap"
+  rel="stylesheet"
+/>
+
+<style>
+  /* =========================
+     THEME TOKENS (edit these)
+     ========================= */
+  :root {
+    --font-display: "UnifrakturMaguntia", serif;
+    --font-body: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+    --text: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.85);
+    --shadow-text: 1px 1px 0 #000;
+
+    --link: #ffffff;
+    --link-hover: #e1478a;
+
+    --panel-bg-image: url("https://i.pinimg.com/564x/32/63/8e/32638e4bf9b58ac4d90b88273015d153.jpg");
+    --page-bg-image: url("https://i.pinimg.com/564x/db/95/11/db9511ef11d4cdb91e1bbf981b8c5150.jpg");
+    --nav-bg-image: url("https://i.pinimg.com/564x/18/70/da/1870da4b734db9f02f32a9d3b3ed8fff.jpg");
+
+    --accent-pink: #ff91b0;
+    --accent-pink-2: #f3a3c4;
+    --cell-a: #d6a7d2;
+    --cell-b: #eec0e7;
+
+    --border: 1px solid rgba(255, 255, 255, 0.9);
+    --radius: 10px;
+
+    --glow-sm: 0 0 6px rgba(255, 255, 255, 0.75);
+    --glow-md: 0 0 10px rgba(255, 255, 255, 0.8);
+    --glow-lg: 0 0 14px rgba(255, 255, 255, 0.85);
+
+    --scanline: linear-gradient(
+      rgba(15, 18, 82, 0.48) 50%,
+      rgba(0, 0, 0, 0) 50%
+    );
+
+    --float-distance: 8px;
+    --float-duration: 3s;
+  }
+
+  /* =========================
+     BASE / PAGE
+     ========================= */
+  .theme-spacehey {
+    font-family: var(--font-body);
+    color: var(--text);
+    text-shadow: var(--shadow-text);
+    text-transform: lowercase;
+
+    background: var(--page-bg-image) no-repeat fixed;
+    background-size: cover;
+    background-position: center bottom;
+    min-height: 100svh;
+  }
+
+  /* scanline overlay */
+  .theme-spacehey::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    background: var(--scanline);
+    background-size: 100% 2px, 3px 100%;
+    mix-blend-mode: normal;
+  }
+
+  /* layout wrapper */
+  .theme-spacehey .container {
+    width: min(1100px, calc(100% - 24px));
+    margin: 0 auto;
+    padding: 18px 0 28px;
+  }
+
+  /* =========================
+     TYPOGRAPHY
+     ========================= */
+  .theme-spacehey h1,
+  .theme-spacehey .site-title {
+    font-family: var(--font-display);
+    text-align: center;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    color: var(--text);
+    text-shadow: 2px 2px 0 #000;
+    margin: 0 0 12px;
+  }
+
+  .theme-spacehey h2,
+  .theme-spacehey h3,
+  .theme-spacehey h4 {
+    margin: 0 0 10px;
+    color: var(--text);
+  }
+
+  /* =========================
+     LINKS
+     ========================= */
+  .theme-spacehey a {
+    color: var(--link);
+    text-decoration: none;
+  }
+  .theme-spacehey a:hover,
+  .theme-spacehey a:active {
+    color: var(--link-hover);
+    font-style: italic;
+  }
+
+  /* =========================
+     NAV
+     ========================= */
+  .theme-spacehey .nav {
+    margin-top: 10px;
+    background: var(--nav-bg-image);
+    background-size: cover;
+    background-position-y: 210px;
+    border: var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--glow-md);
+    filter: hue-rotate(17deg) brightness(1.5);
+    overflow: hidden;
+  }
+
+  .theme-spacehey .nav-top {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 12px;
+  }
+
+  .theme-spacehey .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .theme-spacehey .nav-logo {
+    width: 165px;
+    height: 42px;
+    filter: drop-shadow(2px 4px 6px black);
+    object-fit: contain;
+  }
+
+  .theme-spacehey .nav-search {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .theme-spacehey .nav-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .theme-spacehey .nav-links {
+    background: transparent;
+    padding: 6px 16px 12px;
+    text-align: center;
+  }
+
+  .theme-spacehey .nav-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .theme-spacehey .nav-links li {
+    display: inline;
+  }
+
+  .theme-spacehey .nav-links li:not(:last-child)::after {
+    content: " | ";
+    color: white;
+  }
+
+  .theme-spacehey .nav-links a {
+    color: white;
+    text-shadow: 0 0 2px #000, 0 0 2px #000;
+    font-size: max(0.98em, 12px);
+  }
+  .theme-spacehey .nav-links a:hover {
+    text-decoration: underline;
+    color: var(--accent-pink-2);
+  }
+
+  /* =========================
+     INPUTS / BUTTONS
+     ========================= */
+  .theme-spacehey button,
+  .theme-spacehey input,
+  .theme-spacehey select,
+  .theme-spacehey textarea {
+    font: inherit;
+    border-radius: 8px;
+  }
+
+  .theme-spacehey input,
+  .theme-spacehey select,
+  .theme-spacehey textarea {
+    background: white;
+    color: black;
+    border: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
+    padding: 8px 10px;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .theme-spacehey button {
+    background: white;
+    color: black;
+    border: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  .theme-spacehey button:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--glow-md);
+  }
+
+  /* =========================
+     PANELS / CARDS
+     ========================= */
+  .theme-spacehey .panel {
+    background: var(--panel-bg-image);
+    background-position-x: center;
+    background-size: cover;
+    border: var(--border);
+    box-shadow: var(--glow-md);
+    border-radius: calc(var(--radius) + 2px);
+    filter: hue-rotate(45deg);
+    overflow: hidden;
+  }
+
+  .theme-spacehey .panel-body {
+    padding: 14px;
+    color: var(--text);
+  }
+
+  .theme-spacehey .card {
+    border: none;
+    margin: 12px 0;
+  }
+
+  .theme-spacehey .card-header {
+    background: white;
+    color: black;
+    border-radius: var(--radius);
+    padding: 6px 10px;
+    box-shadow: var(--glow-md);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .theme-spacehey .card-header h3,
+  .theme-spacehey .card-header h4 {
+    margin: 0;
+    color: black;
+    text-shadow: none;
+    font-weight: 700;
+  }
+
+  .theme-spacehey .card-content {
+    padding: 12px 2px 2px;
+  }
+
+  /* =========================
+     TABLES (SpaceHey-like)
+     ========================= */
+  .theme-spacehey table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 10px;
+  }
+
+  .theme-spacehey td {
+    vertical-align: top;
+    border-radius: var(--radius);
+    padding: 14px;
+    background: var(--cell-b);
+    box-shadow: 0 0 10px #ffffff, inset 5px 6px rgba(255, 255, 255, 0.38),
+      inset -5px -7px rgba(171, 104, 175, 0.95);
+    color: white;
+  }
+
+  .theme-spacehey td.label {
+    width: 33%;
+    background: var(--cell-a);
+    font-weight: 800;
+    box-shadow: 0 0 10px #ffffff, inset 3px 5px #f1d6e3,
+      inset -7px -9px rgba(177, 112, 179, 0.95);
+  }
+
+  /* =========================
+     AVATARS / IMAGES
+     ========================= */
+  .theme-spacehey .avatar {
+    border: var(--border);
+    box-shadow: var(--glow-md);
+    border-radius: var(--radius);
+    display: block;
+  }
+
+  /* =========================
+     FOOTER
+     ========================= */
+  .theme-spacehey footer {
+    text-align: center;
+    font-size: 0.85rem;
+    margin: 12px 0 0;
+    padding: 12px 6px;
+    background: transparent;
+    color: var(--text);
+  }
+
+  /* =========================
+     SCROLLBARS (webkit)
+     ========================= */
+  .theme-spacehey ::-webkit-scrollbar {
+    width: 12px;
+    background-color: #fff;
+  }
+  .theme-spacehey ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(102, 0, 0, 0.3);
+    background-color: #eca4bb;
+  }
+  .theme-spacehey ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #fff;
+  }
+
+  /* =========================
+     FLOAT ANIMATION (optional)
+     ========================= */
+  .theme-spacehey .floaty {
+    animation: float var(--float-duration) ease-in-out infinite;
+  }
+  @keyframes float {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(var(--float-distance));
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  /* =========================
+     RESPONSIVE
+     ========================= */
+  @media (max-width: 860px) {
+    .theme-spacehey .nav-top {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .theme-spacehey .nav-actions {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .theme-spacehey input {
+      max-width: 100%;
+    }
+  }
+</style>
+
+<!-- =========================
+     EXAMPLE HTML STRUCTURE
+     ========================= -->
+<body class="theme-spacehey">
+  <div class="container">
+    <header class="floaty">
+      <h1 class="site-title">your site title</h1>
+    </header>
+
+    <nav class="nav floaty">
+      <div class="nav-top">
+        <div class="nav-brand">
+          <!-- replace with your logo -->
+          <img
+            class="nav-logo"
+            src="https://static.spacehey.net/img/logo_optimized.svg"
+            alt="Logo"
+          />
+        </div>
+
+        <form class="nav-search" role="search">
+          <label for="q" style="white-space: nowrap">search:</label>
+          <input id="q" type="search" placeholder="type here..." />
+          <button type="submit">go</button>
+        </form>
+
+        <div class="nav-actions">
+          <a href="#">help</a>
+          <span>|</span>
+          <a href="#">logout</a>
+        </div>
+      </div>
+
+      <div class="nav-links">
+        <ul>
+          <li><a href="#">home</a></li>
+          <li><a href="#">browse</a></li>
+          <li><a href="#">blog</a></li>
+          <li><a href="#">about</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="panel floaty" style="margin-top: 12px">
+      <div class="panel-body">
+        <section class="card">
+          <div class="card-header">
+            <h3>section title</h3>
+            <a href="#">view all</a>
+          </div>
+          <div class="card-content">
+            <p>
+              this is body text. <a href="#">links</a> glow + turn pink on hover.
+            </p>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <h3>details</h3>
+          </div>
+          <div class="card-content">
+            <table>
+              <tr>
+                <td class="label">label</td>
+                <td>value text goes here</td>
+              </tr>
+              <tr>
+                <td class="label">another</td>
+                <td>more content</td>
+              </tr>
+            </table>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <h3>profile block</h3>
+          </div>
+          <div class="card-content" style="display: grid; grid-template-columns: 120px 1fr; gap: 12px;">
+            <img
+              class="avatar"
+              src="https://cdn.spacehey.net/profilepics/2167218_3923ff21a1a87215fd814fb5ab559059.jpg"<!--
+GENERAL SITE THEME (SpaceHey-inspired)
+
+What this gives you:
+- A reusable set of CSS variables + components (nav, cards, tables, buttons, scrollbars)
+- Same “dreamy pink + glow + scanlines + floating” vibe
+- Works on any normal site structure (not tied to SpaceHey classes)
+
+How to use:
+1) Put this <style> in your global CSS (or a theme.css file).
+2) Wrap your site in <body class="theme-spacehey"> (or apply .theme-spacehey to a top-level div).
+3) Use the example HTML structure below (or just copy the classes you want).
+
+Notes:
+- Replace the background image URLs if you want to avoid hotlinking.
+- If you want a lighter or darker version, tweak the :root variables only.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap"
+  rel="stylesheet"
+/>
+
+<style>
+  /* =========================
+     THEME TOKENS (edit these)
+     ========================= */
+  :root {
+    --font-display: "UnifrakturMaguntia", serif;
+    --font-body: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+    --text: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.85);
+    --shadow-text: 1px 1px 0 #000;
+
+    --link: #ffffff;
+    --link-hover: #e1478a;
+
+    --panel-bg-image: url("https://i.pinimg.com/564x/32/63/8e/32638e4bf9b58ac4d90b88273015d153.jpg");
+    --page-bg-image: url("https://i.pinimg.com/564x/db/95/11/db9511ef11d4cdb91e1bbf981b8c5150.jpg");
+    --nav-bg-image: url("https://i.pinimg.com/564x/18/70/da/1870da4b734db9f02f32a9d3b3ed8fff.jpg");
+
+    --accent-pink: #ff91b0;
+    --accent-pink-2: #f3a3c4;
+    --cell-a: #d6a7d2;
+    --cell-b: #eec0e7;
+
+    --border: 1px solid rgba(255, 255, 255, 0.9);
+    --radius: 10px;
+
+    --glow-sm: 0 0 6px rgba(255, 255, 255, 0.75);
+    --glow-md: 0 0 10px rgba(255, 255, 255, 0.8);
+    --glow-lg: 0 0 14px rgba(255, 255, 255, 0.85);
+
+    --scanline: linear-gradient(
+      rgba(15, 18, 82, 0.48) 50%,
+      rgba(0, 0, 0, 0) 50%
+    );
+
+    --float-distance: 8px;
+    --float-duration: 3s;
+  }
+
+  /* =========================
+     BASE / PAGE
+     ========================= */
+  .theme-spacehey {
+    font-family: var(--font-body);
+    color: var(--text);
+    text-shadow: var(--shadow-text);
+    text-transform: lowercase;
+
+    background: var(--page-bg-image) no-repeat fixed;
+    background-size: cover;
+    background-position: center bottom;
+    min-height: 100svh;
+  }
+
+  /* scanline overlay */
+  .theme-spacehey::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    background: var(--scanline);
+    background-size: 100% 2px, 3px 100%;
+    mix-blend-mode: normal;
+  }
+
+  /* layout wrapper */
+  .theme-spacehey .container {
+    width: min(1100px, calc(100% - 24px));
+    margin: 0 auto;
+    padding: 18px 0 28px;
+  }
+
+  /* =========================
+     TYPOGRAPHY
+     ========================= */
+  .theme-spacehey h1,
+  .theme-spacehey .site-title {
+    font-family: var(--font-display);
+    text-align: center;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    color: var(--text);
+    text-shadow: 2px 2px 0 #000;
+    margin: 0 0 12px;
+  }
+
+  .theme-spacehey h2,
+  .theme-spacehey h3,
+  .theme-spacehey h4 {
+    margin: 0 0 10px;
+    color: var(--text);
+  }
+
+  /* =========================
+     LINKS
+     ========================= */
+  .theme-spacehey a {
+    color: var(--link);
+    text-decoration: none;
+  }
+  .theme-spacehey a:hover,
+  .theme-spacehey a:active {
+    color: var(--link-hover);
+    font-style: italic;
+  }
+
+  /* =========================
+     NAV
+     ========================= */
+  .theme-spacehey .nav {
+    margin-top: 10px;
+    background: var(--nav-bg-image);
+    background-size: cover;
+    background-position-y: 210px;
+    border: var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--glow-md);
+    filter: hue-rotate(17deg) brightness(1.5);
+    overflow: hidden;
+  }
+
+  .theme-spacehey .nav-top {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 12px;
+  }
+
+  .theme-spacehey .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .theme-spacehey .nav-logo {
+    width: 165px;
+    height: 42px;
+    filter: drop-shadow(2px 4px 6px black);
+    object-fit: contain;
+  }
+
+  .theme-spacehey .nav-search {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .theme-spacehey .nav-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .theme-spacehey .nav-links {
+    background: transparent;
+    padding: 6px 16px 12px;
+    text-align: center;
+  }
+
+  .theme-spacehey .nav-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .theme-spacehey .nav-links li {
+    display: inline;
+  }
+
+  .theme-spacehey .nav-links li:not(:last-child)::after {
+    content: " | ";
+    color: white;
+  }
+
+  .theme-spacehey .nav-links a {
+    color: white;
+    text-shadow: 0 0 2px #000, 0 0 2px #000;
+    font-size: max(0.98em, 12px);
+  }
+  .theme-spacehey .nav-links a:hover {
+    text-decoration: underline;
+    color: var(--accent-pink-2);
+  }
+
+  /* =========================
+     INPUTS / BUTTONS
+     ========================= */
+  .theme-spacehey button,
+  .theme-spacehey input,
+  .theme-spacehey select,
+  .theme-spacehey textarea {
+    font: inherit;
+    border-radius: 8px;
+  }
+
+  .theme-spacehey input,
+  .theme-spacehey select,
+  .theme-spacehey textarea {
+    background: white;
+    color: black;
+    border: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
+    padding: 8px 10px;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .theme-spacehey button {
+    background: white;
+    color: black;
+    border: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  .theme-spacehey button:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--glow-md);
+  }
+
+  /* =========================
+     PANELS / CARDS
+     ========================= */
+  .theme-spacehey .panel {
+    background: var(--panel-bg-image);
+    background-position-x: center;
+    background-size: cover;
+    border: var(--border);
+    box-shadow: var(--glow-md);
+    border-radius: calc(var(--radius) + 2px);
+    filter: hue-rotate(45deg);
+    overflow: hidden;
+  }
+
+  .theme-spacehey .panel-body {
+    padding: 14px;
+    color: var(--text);
+  }
+
+  .theme-spacehey .card {
+    border: none;
+    margin: 12px 0;
+  }
+
+  .theme-spacehey .card-header {
+    background: white;
+    color: black;
+    border-radius: var(--radius);
+    padding: 6px 10px;
+    box-shadow: var(--glow-md);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .theme-spacehey .card-header h3,
+  .theme-spacehey .card-header h4 {
+    margin: 0;
+    color: black;
+    text-shadow: none;
+    font-weight: 700;
+  }
+
+  .theme-spacehey .card-content {
+    padding: 12px 2px 2px;
+  }
+
+  /* =========================
+     TABLES (SpaceHey-like)
+     ========================= */
+  .theme-spacehey table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 10px;
+  }
+
+  .theme-spacehey td {
+    vertical-align: top;
+    border-radius: var(--radius);
+    padding: 14px;
+    background: var(--cell-b);
+    box-shadow: 0 0 10px #ffffff, inset 5px 6px rgba(255, 255, 255, 0.38),
+      inset -5px -7px rgba(171, 104, 175, 0.95);
+    color: white;
+  }
+
+  .theme-spacehey td.label {
+    width: 33%;
+    background: var(--cell-a);
+    font-weight: 800;
+    box-shadow: 0 0 10px #ffffff, inset 3px 5px #f1d6e3,
+      inset -7px -9px rgba(177, 112, 179, 0.95);
+  }
+
+  /* =========================
+     AVATARS / IMAGES
+     ========================= */
+  .theme-spacehey .avatar {
+    border: var(--border);
+    box-shadow: var(--glow-md);
+    border-radius: var(--radius);
+    display: block;
+  }
+
+  /* =========================
+     FOOTER
+     ========================= */
+  .theme-spacehey footer {
+    text-align: center;
+    font-size: 0.85rem;
+    margin: 12px 0 0;
+    padding: 12px 6px;
+    background: transparent;
+    color: var(--text);
+  }
+
+  /* =========================
+     SCROLLBARS (webkit)
+     ========================= */
+  .theme-spacehey ::-webkit-scrollbar {
+    width: 12px;
+    background-color: #fff;
+  }
+  .theme-spacehey ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(102, 0, 0, 0.3);
+    background-color: #eca4bb;
+  }
+  .theme-spacehey ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #fff;
+  }
+
+  /* =========================
+     FLOAT ANIMATION (optional)
+     ========================= */
+  .theme-spacehey .floaty {
+    animation: float var(--float-duration) ease-in-out infinite;
+  }
+  @keyframes float {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(var(--float-distance));
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  /* =========================
+     RESPONSIVE
+     ========================= */
+  @media (max-width: 860px) {
+    .theme-spacehey .nav-top {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .theme-spacehey .nav-actions {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .theme-spacehey input {
+      max-width: 100%;
+    }
+  }
+</style>
+
+<!-- =========================
+     EXAMPLE HTML STRUCTURE
+     ========================= -->
+<body class="theme-spacehey">
+  <div class="container">
+    <header class="floaty">
+      <h1 class="site-title">your site title</h1>
+    </header>
+
+    <nav class="nav floaty">
+      <div class="nav-top">
+        <div class="nav-brand">
+          <!-- replace with your logo -->
+          <img
+            class="nav-logo"
+            src="https://static.spacehey.net/img/logo_optimized.svg"
+            alt="Logo"
+          />
+        </div>
+
+        <form class="nav-search" role="search">
+          <label for="q" style="white-space: nowrap">search:</label>
+          <input id="q" type="search" placeholder="type here..." />
+          <button type="submit">go</button>
+        </form>
+
+        <div class="nav-actions">
+          <a href="#">help</a>
+          <span>|</span>
+          <a href="#">logout</a>
+        </div>
+      </div>
+
+      <div class="nav-links">
+        <ul>
+          <li><a href="#">home</a></li>
+          <li><a href="#">browse</a></li>
+          <li><a href="#">blog</a></li>
+          <li><a href="#">about</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="panel floaty" style="margin-top: 12px">
+      <div class="panel-body">
+        <section class="card">
+          <div class="card-header">
+            <h3>section title</h3>
+            <a href="#">view all</a>
+          </div>
+          <div class="card-content">
+            <p>
+              this is body text. <a href="#">links</a> glow + turn pink on hover.
+            </p>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <h3>details</h3>
+          </div>
+          <div class="card-content">
+            <table>
+              <tr>
+                <td class="label">label</td>
+                <td>value text goes here</td>
+              </tr>
+              <tr>
+                <td class="label">another</td>
+                <td>more content</td>
+              </tr>
+            </table>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <h3>profile block</h3>
+          </div>
+          <div class="card-content" style="display: grid; grid-template-columns: 120px 1fr; gap: 12px;">
+            <img
+              class="avatar"
+              src="https://cdn.spacehey.net/profilepics/2167218_3923ff21a1a87215fd814fb5ab559059.jpg"
+              alt="avatar"
+              width="120"
+              height="120"
+              style="object-fit: cover"
+            />
+            <div>
+              <p><b>status:</b> rockst☆r made</p>
+              <p><b>mood:</b> add me on insta</p>
+              <button type="button">primary action</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="floaty">
+      <p>footer text • <a href="#">terms</a> • <a href="#">privacy</a></p>
+    </footer>
+  </div>
+</body>
+
+              alt="avatar"
+              width="120"
+              height="120"
+              style="object-fit: cover"
+            />
+            <div>
+              <p><b>status:</b> rockst☆r made</p>
+              <p><b>mood:</b> add me on insta</p>
+              <button type="button">primary action</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="floaty">
+      <p>footer text • <a href="#">terms</a> • <a href="#">privacy</a></p>
+    </footer>
+  </div>
+</body>
